@@ -33,11 +33,7 @@
 
 <preference name="android-minSdkVersion" value="8" />
 
-<preference name="android-maxSdkVersion" value="15" />
 
-<preference name="webviewbounce" value="true" />
-
-<preference name="prerendered-icon" value="true" />
 
 
 
