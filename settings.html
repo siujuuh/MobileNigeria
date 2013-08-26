@@ -1,0 +1,294 @@
+<div id="settings" data-role="view" data-title="Account Settings" data-layout="main-layout" data-init="initSetting" data-show="pageShow">
+
+
+    <ul data-role="listview" data-type="group" data-style="inset">
+        <li>User Profile
+                <ul>
+                    <li style="text-align: center">
+                        <img class="profilepic" id="pic" src="call/pic.png" alt="Image not found" onload="picloaded()" onerror="picerror()" />
+                        <h3 id="hloading">loding picture..</h3>
+                       <!-- <input id="editpic" type="button" data-click="editpic" style="display: none" data-role="button" data-icon="camera" value="change" />-->
+                        <a data-click="editpic" style="display: none; background-color: #333; text-align: center; font-weight: bold; font-size: 1.2em;" data-role="button" data-icon="camera" id="editpic" ></a>
+                    </li>
+                </ul>
+        </li>
+        <li>User Profile Settings
+                <ul>
+                    <li>
+                        <label>
+                            First Name:
+                    <input type="text" id="txtfirst" placeholder="empty" />
+                        </label>
+                    </li>
+
+                    <li>
+                        <label>
+                            Last Name :
+                    <input type="text" id="txtlast" placeholder="empty" />
+                        </label>
+                    </li>
+
+                    <li>
+                        <label>
+                            Email :
+                    <input type="email" id='txtemail' placeholder="empty" />
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            Phone # :
+                    <input id="txtphone" type="tel" placeholder="empty" />
+                        </label>
+                    </li>
+                    <li>
+                        <input class="button" style="background-color: #333; text-align: center; font-weight: bold; font-size: 1em;" data-click="edit" value="Update" type="button" data-role="button" /></li>
+                </ul>
+				
+				
+				
+        </li>
+       <!-- <li>News Feed Settings
+                <ul>
+                    <li>
+                        <label>
+                            Enable PUSH Notification :
+                    <input type="checkbox" checked="checked" id="push-switch" />
+                        </label>
+                    </li>
+                </ul>
+        </li>-->
+
+    </ul>
+
+
+    <br />
+
+    <ul data-role="listview" style="text-align:center" data-type="group" data-style="inset">
+        <li>
+            <a data-role="button" href="about.html" style="background-color: #333; text-align: center; font-weight: bold; font-size: 1.1em;">About Us</a>
+            <a data-role="button" href="contact1.html" style="background-color: #333; text-align: center; font-weight: bold; font-size: 1.1em;">Contact Us</a>
+            <a data-role="button" data-rel="modalview" href="#privacy" style="background-color: #333; text-align: center; font-weight: bold; font-size: 1.1em;">Terms</a>
+        </li>
+    </ul>
+
+    <script>
+
+        function picerror() {
+            this.onerror = null;
+            this.src = 'call/profile-pic.png';
+            $('#hloading').hide();
+            $('#editpic').show();
+        }
+
+        function picloaded() {
+            $('#hloading').hide();
+            $('#editpic').show();
+        }
+
+        function initSetting() {
+            $("#push-switch").kendoMobileSwitch({
+                checked: true,
+                onLabel: "YES",
+                offLabel: "NO"
+            });
+
+            fillProfile();
+        }
+
+        function fillProfile() {
+            try {
+                var userToken = user_token.split('||');
+                $('#txtfirst').val(userToken[6]);
+                $('#txtlast').val(userToken[7]);
+                $('#txtemail').val(userToken[10]);
+                $('#txtphone').val(userToken[1]);
+
+                try {
+                    var imgsrc = url_download + "?id=" + userid;
+
+                    $('#pic').attr('src', imgsrc);
+                }
+                catch (ee) {
+                    $('#pic').attr('src', 'call/profile-pic.png');
+
+                }
+            }
+            catch (d) {
+                // alertmsg(d);
+            }
+
+        }
+
+        function edit(e) {
+            // alertmsg(123);
+            var email = $('#txtemail').val().trim();
+
+            var FirstName = $('#txtfirst').val().trim();
+            var LastName = $('#txtlast').val().trim();
+            var UserName = FirstName + " " + LastName;
+            MobileNumber = $('#txtphone').val().trim();
+
+            if (FirstName.trim() == '' || LastName.trim() == '') {
+                alertmsg('Both last and first names are required\nPlease try again, thanks.');
+                return;
+            }
+
+            if (email != '' && email != undefined)
+                if (!isValidEmail(email)) {
+                    alertmsg(email + ' is not a valid email\nPlease try again, thanks.');
+                    return;
+                }
+
+            app.showLoading();
+            var data = "MobileNumber=" + MobileNumber + "&" +
+                       "DeviceType=" + DeviceType + "&" +
+                       "UserName=" + UserName + "&" +
+                       "DeviceToken=" + DeviceToken + "&" +
+                       "Password=" + Password + "&" +
+                       "FirstName=" + FirstName + "&" +
+                       "LastName=" + LastName + "&" +
+                       "Email=" + email;
+
+
+
+            try {
+                $.ajax({
+                    url: url_create_user,
+                    type: 'POST',
+                    dataType: 'xml',
+                    async: false,
+                    cache: false,
+                    data: data,
+                    success: function (data) {
+                        try {
+                            user_token = data.childNodes[0].textContent;
+
+                            var userToken = user_token.split('||');
+                            if (userToken.length == 11) {
+                                userid = userToken[0];
+                                localStorage.setItem('userid', userid);
+                                localStorage.setItem('user_token', user_token);
+
+                                app.hideLoading();
+
+                                alertmsg('Profile update was successfull.');
+
+                                fillProfile();
+
+                            } else {
+
+                                alertmsg('Profile update was not successfull, please try again later.');
+
+                                app.hideLoading();
+                            }
+                        }
+                        catch (ee) {
+                            app.hideLoading();
+
+                        }
+                    },
+                    error: function (data) {
+                        alertmsg('Data connection error');
+                        app.hideLoading();
+                    }
+                }).done(function (msg) {
+                    //$('#firstName').val('');
+                    //$('#lastName').val('');
+                    //$('#email').val('');
+
+                    app.hideLoading();
+                });
+
+
+
+            }
+            catch (err) {
+                alertmsg(err);
+                app.hideLoading();
+            }
+
+
+            app.hideLoading();
+
+
+        }
+
+        function editpic(e) {
+            // Retrieve image file location from specified source
+           // alertmsg('Retrieve image file location from specified source');
+            navigator.camera.getPicture(
+                uploadPhoto,
+                function (message) { alertmsg('get picture failed'); },
+                {
+                    quality: 50,
+                    destinationType: navigator.camera.DestinationType.FILE_URI,
+                    sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
+                }
+            );
+        }
+
+        function uploadPhoto(imageURI) {
+
+            var options = new FileUploadOptions();
+            options.fileKey = "file";
+            options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
+            options.mimeType = "image/jpeg";
+
+            var email = $('#txtemail').val().trim();
+
+            var FirstName = $('#txtfirst').val().trim();
+            var LastName = $('#txtlast').val().trim();
+            var UserName = FirstName + " " + LastName;
+
+
+            if (FirstName.trim() == '' || LastName.trim() == '') {
+                alertmsg('Both last and first names are required\nPlease try again, thanks.');
+                return;
+            }
+
+            if (email != '' && email != undefined)
+                if (!isValidEmail(email)) {
+                    alertmsg(email + ' is not a valid email\nPlease try again, thanks.');
+                    return;
+                }
+
+
+            app.showLoading();
+
+            var params = {};
+            params.MobileNumber = MobileNumber;
+            params.DeviceType = DeviceType;
+            params.UserName = UserName;
+            params.DeviceToken = DeviceToken;
+            params.Password = Password;
+            params.FirstName = FirstName;
+            params.LastName = LastName;
+            params.Email = email;
+
+            options.params = params;
+
+            var ft = new FileTransfer();
+            ft.upload(imageURI, encodeURI(url_create_user), win, fail, options);
+        }
+
+        function win(r) {
+            //alertmsg("Code = " + r.responseCode);
+            //alertmsg("Response = " + r.response);
+            //alertmsg("Sent = " + r.bytesSent);
+            alertmsg('Successfull');
+            app.hideLoading();
+
+            fillProfile();
+        }
+
+        function fail(error) {
+            //alertmsg("An error has occurred: Code = " + error.code);
+            //alertmsg("upload error source " + error.source);
+            //alertmsg("upload error target " + error.target);
+            alertmsg('Failed');
+            app.hideLoading();
+        }
+    </script>
+
+
+</div>

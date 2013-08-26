@@ -1,0 +1,58 @@
+<div id="ireport" data-role="view" data-title="iShare" data-layout="main-layout" data-show="pageShow">
+    <div data-role="header">
+        <div data-role="navbar" style="vertical-align: middle">
+            <!--   <a data-align="left" data-icon='history' data-role="backbutton" data-click="goBack"></a> -->
+            <a data-role="button" style="background-color: #333;" data-icon="" data-rel="drawer" href="#menu" data-align="left">Menu</a>
+            <span data-role="view-title"></span>
+        </div>
+    </div>
+
+    <div style="height: 500px">
+        <div id="atmn">
+            <a class="twitter-timeline" href="https://twitter.com/MobileNigeria" data-widget-id="361016142086672384">Tweets by @MobileNigeria</a>
+            <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + "://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
+        </div>
+
+        <div style="display: none" id="hashmn">
+        </div>
+    </div>
+
+    <script>
+
+    /*    var h = 0;
+        var w = 0;
+
+        h = $('#content').context.height;
+        w = $('#content').context.width;
+
+        // alertmsg(h);
+
+        h = parseInt(h) - (35 + 48)
+
+        //  alertmsg(h);
+        // app.showLoading();
+        // $('#atmn').html('<a data-tweet-limit="5" class="twitter-timeline"  width="' + w + '" height="' + h + '" href="https://mobile.twitter.com/MobileNigeria" data-widget-id="361016142086672384"></a>');
+
+        // $('#hashmn').html('<a data-tweet-limit="5" class="twitter-timeline" width="' + w + '" height="' + h + '" href="https://mobile.twitter.com/search?q=%23mobileng" data-widget-id="361029240021450753"></a>');
+
+        try {
+            !function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + "://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");
+        }
+        catch (e) {
+            alertmsg('twitter error : ' + e);
+        }
+
+        app.hideLoading();
+
+        //$('#atmn').bind("DOMSubtreeModified", function () {
+        //    //alertmsg('changed');
+        //   // alertmsg($('#content').context.height);
+        //    //alertmsg($('#content').context.height);
+        //   // alertmsg($('#atmn').html());
+
+
+        //    //twitter-widget-0 twitter - widget - 0
+        //});
+        */
+    </script>
+</div>

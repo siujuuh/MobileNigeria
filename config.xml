@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+    <widget xmlns = "http://www.w3.org/ns/widgets"
+        xmlns:gap = "http://phonegap.com/ns/1.0"
+        id        = "com.app.mobilenigeria"
+        versionCode="1" 
+        version   = "1.0">
+
+    <!-- versionCode is optional and Android only -->
+
+    <name>MobileNigeria</name>
+
+    <description>
+	MobileNigeria gives you access to information from the most popular news and blog sources in Nigeria and beyond. You get notifications on every news or story as they happen. You also get to know the events happening around you and details of participation.
+    </description>
+
+    <author href="http://mobilenigeria.ng" email="info@mobilenigeria.ng">
+        MobileNigeria 
+    </author>
+
+
+
+<preference name="phonegap-version" value="2.0.0" />
+
+<preference name="orientation" value="portrait" />
+
+<preference name="fullscreen" value="false" />
+
+<preference name="exit-on-suspend" value="false" />
+
+<preference name="show-splash-screen-spinner" value="false" />
+
+<preference name="disable-cursor" value="false" />
+
+<preference name="android-minSdkVersion" value="8" />
+
+<preference name="android-maxSdkVersion" value="15" />
+
+<preference name="webviewbounce" value="true" />
+
+<preference name="prerendered-icon" value="true" />
+
+
+
+<icon src="icon.png"/>
+<icon src="icons/android/ldpi.png" gap:platform="android" gap:density="ldpi" />
+<icon src="icons/android/mdpi.png" gap:platform="android" gap:density="mdpi" />
+<icon src="icons/android/hdpi.png" gap:platform="android" gap:density="hdpi" />
+<icon src="icons/android/xhdpi.png" gap:platform="android" gap:density="xhdpi" />
+
+<icon src="icons/bb/icon.png" gap:platform="blackberry" />
+<icon src="icons/bb/icon_hover.png" gap:platform="blackberry" gap:state="hover"/>
+
+
+<icon src="icons/ios/icon.png" width="57" height="57" />
+<icon src="icons/ios/icon-72.png" gap:platform="ios" width="72" height="72" />
+<icon src="icons/ios/icon_at_2x.png" width="114" height="114" />
+
+
+
+<gap:splash src="splash.png" />
+<gap:splash src="splash/android/ldpi.png" gap:platform="android" gap:density="ldpi" />
+<gap:splash src="splash/android/mdpi.png" gap:platform="android" gap:density="mdpi" />
+<gap:splash src="splash/android/hdpi.png" gap:platform="android" gap:density="hdpi" />
+<gap:splash src="splash/android/xhdpi.png" gap:platform="android" gap:density="xhdpi" />
+
+<gap:splash src="splash/bb/splash.png" gap:platform="blackberry" />
+
+
+<gap:splash src="splash/ios/Default.png" width="320" height="480" />
+<gap:splash src="splash/ios/Default_at_2x.png" width="640" height="960" />
+<gap:splash src="splash/ios/Default_iphone5.png" width="640" height="1136" />
+<gap:splash src="splash/ios/Default-Landscape.png" width="1024" height="768" />
+<gap:splash src="splash/ios/Default-Portrait.png" width="768" height="1024" />
+
+
+
+<feature name="http://api.phonegap.com/1.0/network"/>
+
+<feature name="http://api.phonegap.com/1.0/file"/>
+
+<feature name="http://api.phonegap.com/1.0/notification"/>
+
+<feature name="http://api.phonegap.com/1.0/media"/>
+
+<feature name="http://api.phonegap.com/1.0/geolocation"/>
+
+<access origin="*" />
+<access origin="*" subdomains="true" />
+
+
+</widget>

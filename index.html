@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta charset="utf-8" />
+<!--      <script src="cordova.js"></script> -->
+        
+        <script src="kendo/js/jquery.min.js"></script>
+        <script src="kendo/js/kendo.mobile.min.js"></script>
+        
+       
+
+        <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
+        <link href="styles/kendo.mobile.exported.css" rel="stylesheet" />
+    
+       <script>
+        var latest_url = "http://mobilelagos.com/service/Feeder.asmx/Latest";
+        var ads_image_url = 'http://mobilelagos.com/media/k2/items/cache/5ef17ed4d733d4dc3519b291889643fe_L.jpg'
+        var ads_details_url = 'http://mobilelagos.com/mobileads/item/392-advert-event';
+        var url_create_user = "http://mobilelagos.com/service/Feeder.asmx/createUser";
+        var url_download = "http://mobilelagos.com/service/Feeder.asmx/Download";
+        var url_update_token =  "http://mobilelagos.com/service/Feeder.asmx/UpdateToken";
+        var user_token = 'user_token';
+        var userid = '';
+        var userdata = '';
+           
+    </script>
+   
+</head>
+    <body>
+    <div id="news" data-role="view" data-title="News" data-layout="main-layout" data-init="fillNews" data-show="pageShow">
+       
+        <div data-role="header">
+            <div data-role="navbar" id="newsbar" style="vertical-align: middle">
+                <!--<a data-align="left" data-icon='history' data-role="backbutton" data-click="goBack"></a>-->
+                <a data-role="button" style="background-color: #333;" data-icon="" data-rel="drawer" href="#menu" data-align="left">Channels</a>
+                <span data-role="view-title"></span>
+            </div>
+        </div>
+        <script id="newstemplate" type="text/x-kendo-template">
+		
+		
+
+	
+	
+         <a class="item-link" >
+
+                <img class="pullImage" src="#=imageurl#" />
+				<h3 class="item-title">#= title #</h3>
+                    <p class="item-info" >#= time #</p><input  value="#= sn #" type="hidden" />
+                    <span class="item-info" style='display:none'  >#=sourceid#</span>
+                      <b style='display:none'>#=link#</b>
+
+        </a>
+		
+		
+		
+        </script>
+
+        <ul id="newsList" data-type="group" data-fixed-headers="true"></ul>
+        <script>
+
+            function lastID() {
+                try {
+                    return $('#newsList li').last().find('input').val();
+                }
+                catch (u) {
+                    return 0;
+                }
+            }
+
+            function firstID() {
+                try {
+                    return $('#newsList li').first().find('input').val();
+                }
+                catch (u) {
+                    return 0;
+                }
+            }
+
+            function fillNews() {
+
+                try {
+                    app.showLoading();
+                }
+                catch (ee) { }
+
+                $("#newsList").kendoMobileListView({
+                    dataSource: newsDataSource,
+                    pullToRefresh: true,
+                    appendOnRefresh: true,
+                    template: $("#newstemplate").html(),
+					headerTemplate: "${value}",
+					fixedHeaders: true,
+					pullTemplate: "Pull to Update",
+					releaseTemplate: "Release to load",
+                    pullParameters: function (item) {
+                        //item is the first data item in the ListView
+                        return {
+                            id: firstID(),//firstItem.sn,
+                            //bottomid: lastID() ,// lastItem.sn
+                            page: 0
+                        };
+                    },
+                    dataBound: function (e) {
+                        //  alertmsg(2);
+                        $("#newsList li").each(function (index) {
+
+                            try {
+                                var chan = $(this).find('span').text();
+                                if (chan != currentChannel) {
+                                    $(this).remove();
+                                }
+                                else {
+                                    var indx = getChannelindex(chan);
+                                    var src = $(this).find('img').attr('src');
+                                    if (src == 'undefined') {
+                                        $(this).find('img').attr('src', 'source/' + ChannelIcons[indx]);
+                                    }
+                                    var href = $(this).find('b').text();
+                                    $(this).click(function () {
+                                        app.showLoading();
+                                        window.open(href, '_blank', 'location=no');
+                                        app.hideLoading();
+                                    });
+                                }
+
+
+                            }
+                            catch (e) {
+                            }
+                        });
+
+                        if ($("#newsList li").length < 1) {
+
+                            if (currentChannel != undefined) {
+                                alertmsg('No news item found for ' + currentChannel);
+                            }
+                            else {
+                                alertmsg('No news item found');
+                            }
+
+                            loadNewsFromStore();
+
+                            
+                        }
+                        else {
+                            storeNews();
+                        }
+
+                        try{
+                            $("#newsbar").data("kendoMobileNavBar").title(currentChannel);
+                        } catch (dd) { }
+
+                        app.hideLoading();
+                    }
+
+                });
+
+                newsInit();
+            }
+            var newsDataSource = new kendo.data.DataSource({
+                serverPaging: true,
+				serverGrouping: true,
+				serverSorting: true,
+				serverFiltering: true,
+				pageSize: 10,
+                transport: {
+                    read: {
+                        url: latest_url, // the remote service url
+                        dataType: "xml"
+                    },
+                    parameterMap: function (options) {
+                        return {
+                            Channels: currentChannel,
+                            page: options.page,
+                            rpp: options.pageSize,
+                            id: options.id ? options.id : 1 //available when the ListView is pulled.
+                            // topid: options.topid ? options.topid : 1 //avaliable when the ListView scrolled down.
+                        };
+                    }
+                },
+                error: function (e) {
+                    // alertmsg(e.errors); // displays "Invalid query"
+                    app.hideLoading();
+                },
+                schema: { // describe the result format
+                    // data: "results" // the data which the DataSource will be bound to is in the "results" field
+                    // specify the the schema is XML
+                    type: "xml",
+                    // the XML element which represents a single data record
+                    data: "/ArrayOfArticle/Article",
+                    // define the model - the object which will represent a single data record
+					
+					model: {
+                        // configure the fields of the object
+                        fields: {
+                            title: "Title/text()",
+                            link: "DetailLink/text()",
+                            sourceid: "SourceID/text()",
+                            pubDate: "pubDate/text()",
+                            time: "TimeVal/text()",
+                            date: "DateVal/text()",
+                            imageurl: "ImageUrl/text()",
+                            islastitem: "IsLastItem/text()",
+                            sn: "SN/text()"
+																			
+                        }
+                    },
+					
+
+                   
+                    total: function () { return 100 }
+                },
+				
+				// group: "date"
+				// group: { field: 'date', dir: 'desc'},
+                
+            });
+        </script>
+    </div>
+
+    <div id="profile" data-role="view" data-title="" data-show="pageShow" data-init="initProfile">
+        <div data-role="header">
+            <div data-role="navbar">
+                <span data-role="view-title"></span>
+            </div>
+        </div>
+		<p></p>
+        <img class="tlogo" width="100%" src="img/logoicon.png" />
+        <ul data-role="listview" data-style="inset" data-type="group">
+
+            <li>
+                <ul>
+                    <li>
+                        <label>
+                            First Name :
+                    <input type="text" id="firstName" placeholder="empty" />
+                        </label>
+                    </li>
+
+                    <li>
+                        <label>
+                            Last Name :
+                    <input type="text" id="lastName" placeholder="empty" />
+                        </label>
+                    </li>
+
+                    <li>
+                        <label>
+                            Email :
+                    <input type="email" id='email' placeholder="empty" />
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            Phone # :
+                    <input id="phone" type="tel" placeholder="empty" />
+                        </label>
+                    </li>
+
+                    <li>
+                        <label>
+                            <a data-role="button" class="left" style="background-color: #009900; font-size: 0.8em;" data-rel="modalview" href="#privacy">Agree to Terms?</a>
+							<input type="checkbox" checked="checked" id="agree-switch" />
+                        </label>
+						
+                    </li>
+
+                </ul>
+            </li>
+
+        </ul>
+
+        <div id="offStyle">
+            <style>
+                #profile .km-content {
+                    background: #0099cc;
+                }
+
+                    #profile .km-content .km-listgroupinset .km-group-title .km-text {
+                        color: rgb(255, 255, 255);
+                    }
+				
+				#btnSave {
+					display: block;
+					text-align: center;
+					font-weight: bold;
+					font-size: 1.4em;
+				}
+            </style>
+        </div>
+        <br />
+        <input class="button" style="background-color: #0099cc;" data-click="register" value="START" type="button" data-role="button" id="btnSave" />
+
+        <script>
+
+            function closeModalView() {
+                $("#privacy").kendoMobileModalView("close");
+            }
+
+            function switchChange(e) {
+                if (e.checked) {
+                    $('#btnSave').show();
+                }
+                else {
+                    $('#btnSave').hide();
+                }
+            }
+            function initProfile(e) {
+                $("#agree-switch").kendoMobileSwitch({
+                    checked: true,
+                    onLabel: "YES",
+                    offLabel: "NO",
+                    change: switchChange
+                });
+            }
+
+            function register(e) {
+
+                app.showLoading();
+                var email = $('#email').val().trim();
+
+                var FirstName = $('#firstName').val().trim();
+                var LastName = $('#lastName').val().trim();
+                var UserName = FirstName + " " + LastName;
+                MobileNumber = $('#phone').val().trim();
+
+                if (FirstName == '' || LastName == '') {
+                    alertmsg('Both last and first names are required\nPlease try again, thanks.');
+                    app.hideLoading();
+                    return;
+                }
+
+                if (email != '' && email != undefined)
+                    if (!isValidEmail(email)) {
+                        alertmsg(email + ' is not a valid email\nPlease try again, thanks.');
+                        app.hideLoading();
+                        return;
+                    }
+
+
+
+                var data = "MobileNumber=" + MobileNumber + "&" +
+                           "DeviceType=" + DeviceType + "&" +
+                           "UserName=" + UserName + "&" +
+                           "DeviceToken=" + DeviceToken + "&" +
+                           "Password=" + Password + "&" +
+                           "FirstName=" + FirstName + "&" +
+                           "LastName=" + LastName + "&" +
+                           "Email=" + email;
+
+
+
+                try {
+                    $.ajax({
+                        url: url_create_user,
+                        type: 'POST',
+                        dataType: 'xml',
+                        async: false,
+                        cache: false,
+                        data: data,
+                        success: function (data) {
+                            try {
+                                user_token = data.childNodes[0].textContent;
+
+                                var userToken = user_token.split('||');
+                                if (userToken.length == 11) {
+
+                                    userid = userToken[0];
+                                    localStorage.setItem('userid', userid);
+                                    localStorage.setItem('user_token', user_token);
+
+                                    app.hideLoading();
+
+                                    $('#offStyle').html('');
+
+                                    app.navigate('#news');
+
+
+                                } else {
+
+                                    alertmsg('Your registration was not successfull, please try again later.');
+
+                                    app.hideLoading();
+                                }
+                            }
+                            catch (ee) {
+                                app.hideLoading();
+                                alertmsg('Data connection error\n' + ee);
+                            }
+                        },
+                        error: function (data) {
+                            // alertmsg(data);
+                            alertmsg('Data connection error');
+                            app.hideLoading();
+                        }
+                    }).done(function (msg) {
+                        //$('#firstName').val('');
+                        //$('#lastName').val('');
+                        //$('#email').val('');
+
+                        app.hideLoading();
+                    });
+
+
+
+                }
+                catch (err) {
+                    alertmsg(err);
+                    app.hideLoading();
+                }
+
+
+                app.hideLoading();
+
+
+            }
+
+        </script>
+    </div>
+
+    <div data-role="modalview" id="privacy" style="width: 95%; height: 18em;">
+        <div data-role="header">
+            <div data-role="navbar">
+                <span>Terms/Privacy</span>
+                <a data-click="closeModalView" data-role="button" data-align="right">Close</a>
+            </div>
+        </div>
+        <ul data-role="listview" data-style="inset" data-type="group">
+
+            <li>
+                <p>
+                    But I must explain to you how all this mistaken idea of denouncing pleasure 
+                and praising pain was born and I will give you a complete account of the system, 
+                and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. 
+                </p>
+                <p>
+                    No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not
+                 know how to pursue pleasure rationally encounter consequen11ces that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?
+                </p>
+            </li>
+
+        </ul>
+        <br />
+    </div>
+	
+	
+
+
+    <div id="menu" data-role="drawer" data-position="left" data-before-show="prevent" style="width: 240px" data-title="News Channels" data-views="['news','ireport.html']" data-show="pageShow">
+        <header data-role="header">
+            <div data-role="navbar">
+                <span id="menutitle" data-role="view-title"></span>
+            </div>
+        </header>
+
+        <ul class="simple" style="display: none" id="twittermenu">
+        </ul>
+
+        <ul class="simple" id="listView"></ul>
+        <script id="menutemplate" type="text/x-kendo-template">
+                        <a>
+                            <h2>#=name#</h2>
+                            <img src="#=img#" />
+                        </a>
+        </script>
+        <style>
+            .km-ios #menu .km-content, .km-android #menu .km-content, .km-blackberry #menu .km-content,
+            .km-ios #menu .km-list > li, .km-android #menu .km-list > li, .km-blackberry #menu .km-list > li,
+            .km-ios #menu .km-listview-link > .km-icon, .km-android #menu .km-listview-link > .km-icon, .km-blackberry #menu .km-listview-link > .km-icon,
+            .km-ios #menu .km-list li > .km-icon, .km-android #menu .km-list li > .km-icon, .km-blackberry #menu .km-list li > .km-icon,
+            #right-drawer .km-content {
+                background-color: #4e4e4e;
+                color: #fff;
+            }
+
+            .km-ios #menu .km-group-title,
+            .km-blackberry #menu .km-group-title {
+                background-color: #6e6e6e;
+                color: #fff;
+            }
+
+            #menu .km-navbar, #right-drawer .km-navbar,
+            .km-tablet .km-ios #menu .km-view-title,
+            .km-tablet .km-ios #right-drawer .km-view-title {
+                background-color: #2e2e2e;
+                color: #fff;
+                text-shadow: 0 -1px rgba(0,0,0,.5);
+            }
+
+            .km-drawer-button:before, .km-drawer-button:after {
+                content: "\E077";
+            }
+
+            .km-contacts:before, .km-contacts:after {
+                content: "\E0E4";
+            }
+
+            .km-camera:before, .km-camera:after {
+                content: "\E0D0";
+            }
+
+            .km-printer:before, .km-printer:after {
+                content: "\E07E";
+            }
+
+            .km-comments:before, .km-comments:after {
+                content: "\E093";
+            }
+
+            .km-graph:before, .km-graph:after {
+                content: "\E04B";
+            }
+
+
+            #two-drawer-home h2 {
+                display: inline-block;
+                font-size: 1em;
+                line-height: 3em;
+                margin: 0 0 0 1em;
+            }
+
+            #two-drawer-home img {
+                float: left;
+                width: 3em;
+                height: 3em;
+                margin: 0;
+                border: 2px solid rgba(0,0,0,.1);
+            }
+
+            .km-ios #two-drawer-home .km-listview {
+                background-color: #eaf1f5;
+            }
+        </style>
+    </div>
+
+    <div id="layout" data-role="layout" data-id="main-layout" data-show="pageShow">
+        <div data-role="header">
+            <div data-role="navbar" style="vertical-align: middle">
+              
+                <span id="pageTitle" data-role="view-title"></span>
+            </div>
+        </div>
+        <div data-role="footer">
+             <div data-role="tabstrip" id="tabStrip">
+               
+                <a data-icon="icon-newspaper" href="#news" >News
+                </a>
+                 <a data-icon="icon-info" href="ireport.html">iShare
+                </a>
+                 <a data-icon="icon-bookmark" href="event.html" >Events
+                </a><a data-icon="icon-phone-3" href="call.html">Hotlines
+                </a><a data-icon="icon-cog" href="settings.html">Settings</a>
+
+            </div>
+        </div>
+    </div>
+
+    <style scoped>
+	
+	
+.item-link {
+    height: auto;
+    float: right;
+}
+
+
+.item-photo {
+    width: 4em;
+    height: 4em;
+    float: left;
+    margin: 0 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+}
+
+
+#newsList .item-title {
+	float: left;
+	font-size: .85em;
+    line-height: 1.4em;
+    margin: -4.75em 0 0 0;
+	padding:0 1em 0 70px;
+    width: auto;
+}
+#newsList .item-info {
+	float: right;
+	font-weight:normal;
+	font-size: .75em;
+	line-height: .6em;
+    margin: 0 0 0 0;
+    
+}
+
+			
+	
+        .tweet {
+            font-size: .8em;
+            line-height: 1.2em;
+        }
+
+        .right {
+            float: right;
+        }
+
+        .pullImage {
+            width: 64px;
+            height: 64px;
+            border-radius: 3px;
+            float: left;
+            margin-right: 10px;
+            vertical-align: middle;
+            -webkit-box-shadow: 0 1px 3px #333;
+            box-shadow: 0 1px 3px #333;
+            -webkit-border-radius: 8px;
+            border-radius: 8px;
+        }
+
+        .adsimg {
+            -webkit-border-radius: 10px;
+            border-radius: 10px;
+            width: 80%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .button {
+            width: 80%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .tlogo {
+            -webkit-border-radius: 10px;
+            border-radius: 10px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+			max-width:220px;
+        }
+
+        label {
+            color: #006F93;
+        }
+
+        .profilepic {
+            -webkit-border-radius: 10px;
+            border-radius: 10px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            max-height: 100px;
+            max-width: 100px;
+        }
+
+        .sublink {
+            font-size: .9em;
+            font-weight: normal;
+            display: inline-block;
+            padding: 3px 3px 0 0;
+            text-decoration: none;
+            opacity: .8;
+        }
+
+        .simple h2 {
+            display: inline-block;
+            font-size: .8em;
+            margin: .5em 0 .5em 1em;
+        }
+
+        .simple h1 {
+            display: inline-block;
+            font-size: .7em;
+            margin: .5em 0 .5em 1em;
+        }
+
+        .simple li a {
+            vertical-align: middle;
+        }
+
+        .simple img {
+            float: left;
+            width: 40px;
+            height: 40px;
+            vertical-align: middle;
+            margin: 0;
+            -webkit-box-shadow: 0 1px 3px #333;
+            box-shadow: 0 1px 3px #333;
+            -webkit-border-radius: 4px;
+            border-radius: 4px;
+        }
+    </style>
+
+    <script src="Plugins/PushPlugin/PushNotification.js"></script>
+     <script src="scripts/main.js"></script>
+     <script src="scripts/push.js"></script>
+
+</body>   
+    <!--script src="Plugins/PushPlugin/PushNotification.js"></script>
+    <script src="Plugins/com.phonegap.plugins.pushPlugin-1.2.2/www/PushNotification.js"></script>
+     <script src="scripts/main.js"></script>
+     <script src="scripts/push.js"></script-->
+</html>
+
+
+

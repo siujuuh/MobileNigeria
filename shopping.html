@@ -1,0 +1,70 @@
+<div id="shopping" data-role="view" data-title="Shopping" data-layout="main-layout" data-init="shopInit" data-show="pageShow">
+
+        <ul class="simple" id="shopList"></ul>
+        <!--krd56xd-->
+        <script>
+            var shop = ["Call a Taxi",
+                        "Tickets & Events",
+                        "DSTV Subscribtion",
+                        "LAWMA Bills"];
+
+            var shopImage = ["taxiicon.png",
+                            "ticketicon.png",
+                            "dstvicon.png",
+                            "lawmaicon.png"];
+
+            var isevent = ["0", "1", "0", "0"];
+
+            function getShopData() {
+                var data = [], idx = 0;
+
+                for (; idx < shop.length; idx++) {
+                    data.push({
+                        name: shop[idx],
+                        img: 'img/' + shopImage[idx],
+                        isevent: isevent[idx]
+                    });
+                }
+
+                return data;
+            }
+
+            var shopdataSource = new kendo.data.DataSource({
+                data: getShopData()
+            });
+
+            function shopInit() {
+
+                $("#shopList").kendoMobileListView({
+                    dataSource: shopdataSource,
+                    template: $("#shoptemplate").text()
+                });
+
+                $("#shopList li").each(function (idx) {
+
+                    $(this).click(function () {
+                        try {
+                            if (isevent[idx] == 0) {
+                                app.navigate('contact2.html');
+                            }
+                            else {
+                                app.navigate('event.html');
+                            }
+                        }
+                        catch (ex) { }
+                    });
+                });
+            }
+
+        </script>
+
+
+        <script id="shoptemplate" type="text/x-kendo-template">
+                        <a>
+                            <h1>#=name#</h1>
+                            <img src="#=img#" />
+                        </a>
+        </script>
+
+
+    </div>

@@ -1,0 +1,100 @@
+<div id="call" data-role="view" data-title="Hotlines" data-layout="main-layout" data-init="callInit" data-show="pageShow">
+    <script>
+        var call = ["GET A TAXI", "EMERGENCY CALL", "Distress Call", "Rapid Response Squad",
+            "Traffic Control",
+            "Vehicle Breakdown Assistance", "NEMA",
+            "Flooding/Blocked Drainage", "Open Corpse (SEHMU)"];
+
+        var callImage = ["taxi.png", "emergencynumber.png", "distresscall.png", "rrspolice.png",
+            "latsma.png",
+            "aarescue.png", "nema.png",
+            "efag.png", "sehmu.png"];
+
+        var callNumber = ["767", "112", "767", "08056250710", "08075005411",
+                "08025551111", "080022556362", "08056145481", "08034279776"];
+
+        var callinfo = ["Lagos State Only", 'Nationwide', 'Lagos State Only', 'Lagos State Only', 'Lagos State Only','Nationwide', 'Nationwide',  'Lagos State Only', 'Lagos State Only'];
+
+        function getCallData() {
+            var data = [], idx = 0;
+
+            for (; idx < call.length; idx++) {
+                data.push({
+                    name: call[idx],
+                    info: callinfo[idx],
+                    img: 'call/' + callImage[idx],
+                    phone: callNumber[idx]
+                });
+            }
+
+            return data;
+        }
+
+        var calldataSource = new kendo.data.DataSource({
+            data: getCallData()
+        });
+
+        function callInit() {
+
+            $("#callList").kendoMobileListView({
+                dataSource: calldataSource,
+                template: $("#calltemplate").text()
+            });
+
+            $("#callList li").each(function (idx) {
+
+                $(this).click(function () {
+                    try {
+                        if (confirm("Call " + call[idx] + " " + callNumber[idx] + '?')) {
+                            document.location.href = 'tel:' + callNumber[idx];
+                        }
+                    }
+                    catch (ex) { }
+                });
+            });
+        }
+
+    </script>
+
+    <!-- <h3>Lagos State Emergency Numbers</h3>
+        <hr />-->
+    <ul class="simple" id="callList" data-type="group"></ul>
+    <script id="calltemplate" type="text/x-kendo-template">
+        <a href="call.html"><h2>#=name#</h2><p>#=info#</p><img class="hotline-photo" src="#=img#" /></a>
+    </script>
+
+    <style scoped>
+        #callList h2 {
+            display: inline-block;
+            line-height: .3em;
+            font-size: 1em;
+            margin: 0 0 0 60px;
+        }
+
+        #callList p {
+            font-size: .7em;
+            font-weight: normal;
+            color: #0099cc;
+            line-height: 1.5em;
+            margin: 0 0 0 60px;
+        }
+
+        #callList img, .hotline-photo {
+            float: left;
+            width: 3em;
+            height: 3em;
+            margin: -2.8em 0;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            -webkit-border-radius: 6px;
+            border-radius: 6px;
+        }
+
+        .km-flat #callList img, .hotline-photo {
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            -webkit-border-radius: 6px;
+            border-radius: 6px;
+        }
+    </style>
+</div>

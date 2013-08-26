@@ -1,0 +1,338 @@
+@font-face {
+	font-family: 'icomoon';
+	src:url('../styles/images/icomoon.eot');
+	src:url('../styles/images/icomoon.eot?#iefix') format('embedded-opentype'),
+		url('../styles/images/icomoon.woff') format('woff'),
+		url('../styles/images/icomoon.ttf') format('truetype'),
+		url('../styles/images/icomoon.svg#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+
+.km-icon-camera:after,
+.km-icon-camera:before {
+	font: 1em/1em "icomoon";
+	content: "\21";
+}
+.km-icon-images:after,
+.km-icon-images:before {
+	font: 1em/1em "icomoon";
+	content: "\22";
+}
+.km-icon-phone:after,
+.km-icon-phone:before {
+	font: 1em/1em "icomoon";
+	content: "\23";
+}
+.km-icon-lock:after,
+.km-icon-lock:before {
+	font: 1em/1em "icomoon";
+	content: "\24";
+}
+.km-icon-loop:after,
+.km-icon-loop:before {
+	font: 1em/1em "icomoon";
+	content: "\25";
+}
+.km-icon-phone-2:after,
+.km-icon-phone-2:before {
+	font: 1em/1em "icomoon";
+	content: "\26";
+}
+.km-icon-checkmark:after,
+.km-icon-checkmark:before {
+	font: 1em/1em "icomoon";
+	content: "\27";
+}
+.km-icon-close:after,
+.km-icon-close:before {
+	font: 1em/1em "icomoon";
+	content: "\28";
+}
+.km-icon-twitter:after,
+.km-icon-twitter:before {
+	font: 1em/1em "icomoon";
+	content: "\29";
+}
+.km-icon-facebook:after,
+.km-icon-facebook:before {
+	font: 1em/1em "icomoon";
+	content: "\2a";
+}
+.km-icon-refresh:after,
+.km-icon-refresh:before {
+	font: 1em/1em "icomoon";
+	content: "\2b";
+}
+.km-icon-phone-3:after,
+.km-icon-phone-3:before {
+	font: 1em/1em "icomoon";
+	content: "\2c";
+}
+.km-icon-picture:after,
+.km-icon-picture:before {
+	font: 1em/1em "icomoon";
+	content: "\2d";
+}
+.km-icon-bullhorn:after,
+.km-icon-bullhorn:before {
+	font: 1em/1em "icomoon";
+	content: "\2e";
+}
+.km-icon-search:after,
+.km-icon-search:before {
+	font: 1em/1em "icomoon";
+	content: "\2f";
+}
+.km-icon-reply:after,
+.km-icon-reply:before {
+	font: 1em/1em "icomoon";
+	content: "\30";
+}
+.km-icon-share:after,
+.km-icon-share:before {
+	font: 1em/1em "icomoon";
+	content: "\31";
+}
+.km-icon-camera-2:after,
+.km-icon-camera-2:before {
+	font: 1em/1em "icomoon";
+	content: "\32";
+}
+.km-icon-retweet:after,
+.km-icon-retweet:before {
+	font: 1em/1em "icomoon";
+	content: "\33";
+}
+.km-icon-reply-all:after,
+.km-icon-reply-all:before {
+	font: 1em/1em "icomoon";
+	content: "\34";
+}
+.km-icon-phone-4:after,
+.km-icon-phone-4:before {
+	font: 1em/1em "icomoon";
+	content: "\35";
+}
+.km-icon-info:after,
+.km-icon-info:before {
+	font: 1em/1em "icomoon";
+	content: "\36";
+}
+.km-icon-list:after,
+.km-icon-list:before {
+	font: 1em/1em "icomoon";
+	content: "\37";
+}
+.km-icon-home:after,
+.km-icon-home:before {
+	font: 1em/1em "icomoon";
+	content: "\38";
+}
+.km-icon-spinner:after,
+.km-icon-spinner:before {
+	font: 1em/1em "icomoon";
+	content: "\39";
+}
+.km-icon-bookmarks:after,
+.km-icon-bookmarks:before {
+	font: 1em/1em "icomoon";
+	content: "\3a";
+}
+.km-icon-bookmark:after,
+.km-icon-bookmark:before {
+	font: 1em/1em "icomoon";
+	content: "\3b";
+}
+.km-icon-pictures:after,
+.km-icon-pictures:before {
+	font: 1em/1em "icomoon";
+	content: "\3c";
+}
+.km-icon-newspaper:after,
+.km-icon-newspaper:before {
+	font: 1em/1em "icomoon";
+	content: "\3d";
+}
+.km-icon-cog:after,
+.km-icon-cog:before {
+	font: 1em/1em "icomoon";
+	content: "\3e";
+}
+.km-icon-twitter-2:after,
+.km-icon-twitter-2:before {
+	font: 1em/1em "icomoon";
+	content: "\3f";
+}
+.km-icon-envelope:after, 
+.km-icon-envelope:before {
+	font: 1em/1em "icomoon";
+	content: "\40";
+}
+.km-icon-quill:after,
+.km-icon-quill:before {
+	font: 1em/1em "icomoon";
+	content: "\41";
+}
+.km-icon-untitled:after,
+.km-icon-untitled:before {
+	font: 1em/1em "icomoon";
+	content: "\42";
+}
+.km-icon-user:after,
+.km-icon-user:before {
+	font: 1em/1em "icomoon";
+	content: "\43";
+}
+.km-icon-earth:after,
+.km-icon-earth:before {
+	font: 1em/1em "icomoon";
+	content: "\44";
+}
+.km-icon-star:after,
+.km-icon-star:before {
+	font: 1em/1em "icomoon";
+	content: "\45";
+}
+
+
+
+
+
+
+/*
+.km-ios .km-view .km-navbar {
+    background-color: rgb(0, 153, 204);
+    background-image: none;
+    background-image: none;
+    background-image: none;
+    background-repeat: repeat;
+    background-position: 0 0;
+}
+.km-ios .km-view .km-navbar .km-button {
+    background-color: rgb(0, 153, 204);
+}
+.km-ios .km-view .km-navbar .km-button.km-state-active {
+    background-color: rgb(0, 153, 204);
+}
+.km-ios .km-view .km-tabstrip .km-state-active span.km-icon {
+    color: rgb(0, 153, 204);
+    background-image: none;
+    background-image: none;
+    background-image: none;
+    background-repeat: repeat;
+    background-position: 0 0;
+    background-color: rgba(0, 0, 0, 0);
+}
+.km-ios .km-view .km-content .km-list .km-state-active .km-listview-link {
+    background-color: rgb(0, 153, 204);
+}
+.km-ios .km-view .km-content .km-scrollview {
+    background-color: rgb(0, 0, 0);
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAFZJREFUeNpi/P//vwoDFHz9+vUzDw8PJ5ApDBMrKCj4DyKMQAph+MuXL+JAOQUgNkbCDMZEKIQwCChEGItHIar9WBVicyi6QgZcPkJWyIDP6zCFAAEGAPRWfgx4dcnyAAAAAElFTkSuQmCC);
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAFZJREFUeNpi/P//vwoDFHz9+vUzDw8PJ5ApDBMrKCj4DyKMQAph+MuXL+JAOQUgNkbCDMZEKIQwCChEGItHIar9WBVicyi6QgZcPkJWyIDP6zCFAAEGAPRWfgx4dcnyAAAAAElFTkSuQmCC);
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAFZJREFUeNpi/P//vwoDFHz9+vUzDw8PJ5ApDBMrKCj4DyKMQAph+MuXL+JAOQUgNkbCDMZEKIQwCChEGItHIar9WBVicyi6QgZcPkJWyIDP6zCFAAEGAPRWfgx4dcnyAAAAAElFTkSuQmCC);
+  
+}
+.km-ios .km-view .km-content {
+    background-color: rgb(255, 255, 255);
+}
+.km-ios .km-view .km-content .km-list > li {
+    background-color: rgb(255, 255, 255);
+}
+*/
+
+.km-ios .km-view .km-navbar {
+    background-color: rgb(0, 153, 204);
+    background-image: none;
+    background-image: none;
+    background-image: none;
+    background-repeat-x: repeat;
+    background-repeat-y: repeat;
+    background-position-x: 0px;
+    background-position-y: 0px;
+}
+.km-ios .km-view .km-navbar .km-button {
+    background-color: rgb(0, 153, 204);
+}
+.km-ios .km-view .km-navbar .km-button.km-state-active {
+    background-color: rgb(0, 153, 204);
+}
+.km-ios .km-view .km-tabstrip .km-state-active span.km-icon {
+    color: rgb(0, 153, 204);
+    background-image: none;
+    background-image: none;
+    background-image: none;
+    background-repeat-x: repeat;
+    background-repeat-y: repeat;
+    background-position-x: 0px;
+    background-position-y: 0px;
+    background-color: rgba(0, 0, 0, 0);
+}
+.km-ios .km-view .km-content .km-list .km-state-active .km-listview-link {
+    background-color: rgb(0, 153, 204);
+}
+.km-ios .km-view .km-content .km-scrollview {
+    background-color: rgb(0, 0, 0);
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAFZJREFUeNpi/P//vwoDFHz9+vUzDw8PJ5ApDBMrKCj4DyKMQAph+MuXL+JAOQUgNkbCDMZEKIQwCChEGItHIar9WBVicyi6QgZcPkJWyIDP6zCFAAEGAPRWfgx4dcnyAAAAAElFTkSuQmCC);
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAFZJREFUeNpi/P//vwoDFHz9+vUzDw8PJ5ApDBMrKCj4DyKMQAph+MuXL+JAOQUgNkbCDMZEKIQwCChEGItHIar9WBVicyi6QgZcPkJWyIDP6zCFAAEGAPRWfgx4dcnyAAAAAElFTkSuQmCC);
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAFZJREFUeNpi/P//vwoDFHz9+vUzDw8PJ5ApDBMrKCj4DyKMQAph+MuXL+JAOQUgNkbCDMZEKIQwCChEGItHIar9WBVicyi6QgZcPkJWyIDP6zCFAAEGAPRWfgx4dcnyAAAAAElFTkSuQmCC);
+}
+.km-ios .km-view .km-content {
+    background-color: rgb(255, 255, 255);
+}
+.km-ios .km-view .km-content .km-list > li {
+    background-color: rgb(255, 255, 255);
+}
+.km-android .km-view .km-tabstrip .km-state-active span.km-icon {
+    color: rgb(0, 153, 204);
+}
+.km-android .km-view .km-tabstrip {
+    background-color: rgb(0, 153, 204);
+}
+.km-android .km-view .km-tabstrip .km-button.km-state-active {
+    background-color: rgb(0, 0, 0);
+}
+.km-android .km-view .km-tabstrip .km-button {
+    background-color: rgb(0, 0, 0);
+}
+.km-android .km-view .km-tabstrip .km-button .km-icon {
+    color: rgb(204, 204, 204);
+}
+.km-android .km-view .km-content .km-list .km-state-active .km-listview-link {
+    background-color: rgb(0, 153, 204);
+}
+.km-android .km-view .km-content .km-list > li {
+    background-color: rgb(255, 255, 255);
+}
+.km-android .km-view .km-content {
+    background-color: rgb(255, 255, 255);
+}
+.km-android .km-view .km-content .km-listgroupinset .km-group-title .km-text {
+    color: rgb(51, 51, 51);
+}
+.km-android .km-view .km-content .km-list > li .km-icon {
+    color: rgb(255, 255, 255);
+}
+.km-android .km-view .km-content .km-list .km-state-active .km-listview-link .km-icon {
+    color: rgb(255, 255, 255);
+}
+.km-android .km-view .km-navbar .km-button.km-state-active {
+    background-color: rgb(0, 153, 204);
+}
+.km-android .km-view .km-content .km-listgroupinset .km-group-title {
+    color: rgb(0, 0, 0);
+}
+.km-android .km-view .km-content .km-scrollview {
+    background-color: rgb(0, 0, 0);
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAFZJREFUeNpi/P//vwoDFHz9+vUzDw8PJ5ApDBMrKCj4DyKMQAph+MuXL+JAOQUgNkbCDMZEKIQwCChEGItHIar9WBVicyi6QgZcPkJWyIDP6zCFAAEGAPRWfgx4dcnyAAAAAElFTkSuQmCC);
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAFZJREFUeNpi/P//vwoDFHz9+vUzDw8PJ5ApDBMrKCj4DyKMQAph+MuXL+JAOQUgNkbCDMZEKIQwCChEGItHIar9WBVicyi6QgZcPkJWyIDP6zCFAAEGAPRWfgx4dcnyAAAAAElFTkSuQmCC);
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAFZJREFUeNpi/P//vwoDFHz9+vUzDw8PJ5ApDBMrKCj4DyKMQAph+MuXL+JAOQUgNkbCDMZEKIQwCChEGItHIar9WBVicyi6QgZcPkJWyIDP6zCFAAEGAPRWfgx4dcnyAAAAAElFTkSuQmCC);
+    background-repeat: ,repeat;
+    background-position: ,0% 0%;
+}
+.km-android .km-view .km-content .km-button.km-state-active {
+    background-color: rgb(0, 153, 204);
+}
+

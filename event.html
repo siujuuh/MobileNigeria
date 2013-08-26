@@ -1,0 +1,211 @@
+<div id="event" data-role="view" data-title="Trending Event" data-layout="main-layout" data-init="fillEvent" data-show="pageShow">
+
+    <script id="eventtemplate" type="text/x-kendo-template">
+
+		
+		
+		
+		 <a class="item-link">
+
+                <img class="pullImage" src="img/ticketicon.png" />
+				<h3 class="item-title">#= title #</h3>
+                    <p class="item-info" >#= pubDate #</p><input  value="#= sn #" type="hidden" />
+                    <span class="item-info" style='display:none'  >#=sourceid#</span>
+                      <b style='display:none'>#=link#</b>
+
+        </a>
+    </script>
+
+    <ul id="eventlist"></ul>
+    <script>
+
+
+
+        function eventlastID() {
+            try {
+                return $('#eventlist li').last().find('input').val();
+            }
+            catch (u) {
+                return 0;
+            }
+        }
+
+        function eventfirstID() {
+            try {
+                return $('#eventlist li').first().find('input').val();
+            }
+            catch (u) {
+                return 0;
+            }
+        }
+
+        function fillEvent() {
+
+
+            app.showLoading();
+
+            $("#eventlist").kendoMobileListView({
+                dataSource: eventdataSource,
+                pullToRefresh: true,
+                appendOnRefresh: true,
+                template: $("#eventtemplate").text(),
+                pullParameters: function (item) {
+                    //item is the first data item in the ListView
+                    return {
+                        id: eventfirstID(),
+                        page: 0
+                    };
+                },
+                //endlessScroll: true,
+                //endlessScrollParameters: function (firstItem, lastItem) {
+                //    if (firstItem) {
+                //        return {
+                //            id: eventlastID()
+                //        };
+                //    }
+                //    if (lastItem) {
+                //        return {
+                //            id: eventlastID()
+                //        };
+                //    }
+
+                //},
+					
+				
+				
+				
+				
+                dataBound: function (e) {
+
+                    $("#eventlist li").each(function (index) {
+
+                        try {
+
+                            var indx = getChannelindex(chan);
+
+                            var href = $(this).find('b').text();
+                            $(this).click(function () {
+                                app.showLoading();
+                                window.open(href, '_blank', 'location=no');
+                                app.hideLoading();
+                            });
+
+                            app.hideLoading();
+                        }
+                        catch (e) {
+                            app.hideLoading();
+                        }
+                    });
+
+                }
+				
+			
+				
+				
+				
+				
+				
+				
+				
+
+            });
+        }
+        var eventdataSource = new kendo.data.DataSource({
+            serverPaging: true,
+            pageSize: 5,
+            transport: {
+                read: {
+                    url: latest_url, // the remote service url
+                    dataType: "xml"
+                },
+                parameterMap: function (options) {
+                    return {
+                        Channels: 'ADS',
+                        page: options.page,
+                        rpp: options.pageSize,
+                        id: options.id ? options.id : 1 //available when the ListView is pulled.
+                        // topid: options.topid ? options.topid : 1 //avaliable when the ListView scrolled down.
+                    };
+                }
+            },
+            error: function (e) {
+                alertmsg(e.errors);
+                app.hideLoading();
+            },
+            schema: { // describe the result format
+                // data: "results" // the data which the DataSource will be bound to is in the "results" field
+                // specify the the schema is XML
+                type: "xml",
+                // the XML element which represents a single data record
+                data: "/ArrayOfArticle/Article",
+                // define the model - the object which will represent a single data record
+                model: {
+                    // configure the fields of the object
+                    fields: {
+                        title: "Title/text()",
+                        link: "DetailLink/text()",
+                        sourceid: "SourceID/text()",
+                        pubDate: "pubDate/text()",
+                        imageurl: "ImageUrl/text()",
+                        islastitem: "IsLastItem/text()",
+                        sn: "SN/text()"
+                    }
+                },
+
+                total: function () { return 50 }
+            }
+        });
+    </script>
+	
+	<style scoped>
+	
+	
+#eventlist .item-link {
+    height: auto;
+    float: right;
+}
+
+
+#eventlist .item-photo {
+    width: 4em;
+    height: 4em;
+    float: left;
+    margin: 0 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+}
+
+
+#eventlist .item-title {
+	float: left;
+	font-size: .85em;
+    line-height: 1.4em;
+    margin: -4.75em 0 0 0;
+	padding:0 1em 0 70px;
+    width: auto;
+}
+#eventlist .item-info {
+	float: right;
+	font-weight:normal;
+	font-size: .75em;
+	line-height: .6em;
+    margin: 0 0 0 0;
+    
+}
+        #eventlist .pullImage {
+            width: 64px;
+            height: 64px;
+            border-radius: 3px;
+            float: left;
+            margin-right: 10px;
+            vertical-align: middle;
+            -webkit-box-shadow: 0 1px 3px #333;
+            box-shadow: 0 1px 3px #333;
+            -webkit-border-radius: 8px;
+            border-radius: 8px;
+        }
+</style>
+
+</div>
