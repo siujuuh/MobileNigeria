@@ -81,12 +81,12 @@ function asdetails(e) {
     } catch (ee) { }
 }
 
-var ChannelNames = ["MobileNigeria News", "Vanguard", "The Punch",
-"The Nation", "LindaIkeji's Blog", "The Sun", "TVC News", "TheNETng", "360Nobs", "Naij.com",
-"ChannelsTV News", "CNN International", "BBC Africa", "Information Nigeria", "Leadership",
+var ChannelNames = ["MobileNigeria", "Vanguard", "The Punch",
+"The Nation", "LindaIkeji", "The Sun", "TVC News", "TheNETng", "360Nobs", "Naij.com",
+"ChannelsTV", "CNN", "BBC Africa", "Info Nigeria", "Leadership",
 "DailyPost", "PM News", "Complete Sports", "Goal.com", "TechCrunch",
-"TechLoy", "OTEKBITS", "LadunLiadi's Blog", "OgbongeBlog", 'Premium Times',
-"Y! Naija", "Sahara Reporters", "The Guardian", "BellaNaija", "I am Redeemed Blog"];
+"TechLoy", "OTEKBITS", "Ladun Liadi", "OgbongeBlog", 'Premium Times',
+"Y! Naija", "Sahara Reporters", "The Guardian", "BellaNaija", "I am Redeemed"];
 
 var ChannelIcons = ["mobilenigeria.png", "vanguard.jpg",
 "punch.png", "thenation.png", "lindaikeji.jpeg", "thesun.png",

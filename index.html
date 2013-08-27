@@ -3,7 +3,7 @@
     <head>
         <title></title>
         <meta charset="utf-8" />
-<!--      <script src="cordova.js"></script> -->
+        <script src="cordova.js"></script>
         
         <script src="kendo/js/jquery.min.js"></script>
         <script src="kendo/js/kendo.mobile.min.js"></script>
@@ -47,9 +47,13 @@
 
                 <img class="pullImage" src="#=imageurl#" />
 				<h3 class="item-title">#= title #</h3>
-                    <p class="item-info" >#= time #</p><input  value="#= sn #" type="hidden" />
-                    <span class="item-info" style='display:none'  >#=sourceid#</span>
+				
+				<div class="item-info">#= time #
+                    <input  value="#= sn #" type="hidden" />
+                    <span style='display:none'>#=sourceid#</span>
                       <b style='display:none'>#=link#</b>
+                </div>
+
 
         </a>
 		
@@ -226,7 +230,7 @@
                 <span data-role="view-title"></span>
             </div>
         </div>
-		<p></p>
+		<p><br /></p>
         <img class="tlogo" width="100%" src="img/logoicon.png" />
         <ul data-role="listview" data-style="inset" data-type="group">
 
@@ -547,8 +551,8 @@
                
                 <a data-icon="icon-newspaper" href="#news" >News
                 </a>
-                 <a data-icon="icon-info" href="ireport.html">iShare
-                </a>
+                 <!--a data-icon="icon-info" href="ireport.html">iShare
+                </a-->
                  <a data-icon="icon-bookmark" href="event.html" >Events
                 </a><a data-icon="icon-phone-3" href="call.html">Hotlines
                 </a><a data-icon="icon-cog" href="settings.html">Settings</a>
@@ -583,17 +587,26 @@
 	font-size: .85em;
     line-height: 1.4em;
     margin: -4.75em 0 0 0;
-	padding:0 1em 0 70px;
+	padding:0 0 0 70px;
     width: auto;
 }
 #newsList .item-info {
 	float: right;
+	color: #cccccc;
 	font-weight:normal;
 	font-size: .75em;
 	line-height: .6em;
     margin: 0 0 0 0;
     
 }
+
+
+#newsList .km-listview-link::after {
+    display: none;
+}
+
+
+
 
 			
 	
